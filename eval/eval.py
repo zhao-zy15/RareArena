@@ -4,45 +4,33 @@ import openai
 import os
 import time
 from tqdm import tqdm
-import sys
 
 
 openAI_key = ""
 client = openai.OpenAI(api_key=openAI_key)
 
-def get_gpt_result_with_retry(prompt, model = "", max_retries = 1, use_json = True):
+def get_gpt_result_with_retry(prompt, model = "gpt4o", max_retries = 3):
     retries = 0
     while retries < max_retries:
         try:
-            if use_json:
-                response = client.chat.completions.create(
-                    model=model, 
-                    messages=[
-                        {"role": "user", "content": prompt},
-                    ],
-                    response_format={"type": "json_object"},
-                    max_tokens=4096,
-                    temperature = 0.1,
-                )
-            else:
-                response = client.chat.completions.create(
-                    model=model, 
-                    messages=[
-                        {"role": "user", "content": prompt},
-                    ],
-                    max_tokens=4096,
-                    temperature = 0.1,
-                )
+            response = client.chat.completions.create(
+                model=model,  
+                messages=[
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=4096,
+                temperature = 0.1,
+            )
             result = response.choices[0].message.content
             return result
         except Exception as e:
-            if hasattr(e, "message") and "filtered" in e.message:
+            if "filtered" in e.message:
                 print("Request filtered!")
                 return None
             print(f"Attempt {retries + 1} failed with error: {e}")
             retries += 1
             time.sleep(1) 
-            
+
     return None
 
 
@@ -60,10 +48,6 @@ if os.path.exists(output_file):
         if d['_id'] not in generated:
             new_data.append(d)
     data = new_data
-split_num = int(sys.argv[1])
-index = int(sys.argv[2])
-split = (len(data) // split_num) + 1
-data = data[(index * split) : min(((index+1) * split), len(data))]
 
 eval_prompt = """
 You are an expert in rare disease field. You will receive a student's answer containing 5 differential diagnoses, as well as the reference diagnosis. You need to score each diagnosis from the student's answer according to the following rules:

@@ -4,39 +4,27 @@ import openai
 import os
 import time
 from tqdm import tqdm
-import sys
 
 
 openAI_key = ""
 client = openai.OpenAI(api_key=openAI_key)
 
-def get_gpt_result_with_retry(prompt, model = "", max_retries=1, use_json = True):
+def get_gpt_result_with_retry(prompt, model = "gpt4o-mini", max_retries = 1):
     retries = 0
     while retries < max_retries:
         try:
-            if use_json:
-                response = client.chat.completions.create(
-                    model=model, 
-                    messages=[
-                        {"role": "user", "content": prompt},
-                    ],
-                    response_format={"type": "json_object"},
-                    max_tokens=4096,
-                    temperature = 0.1,
-                )
-            else:
-                response = client.chat.completions.create(
-                    model=model,  
-                    messages=[
-                        {"role": "user", "content": prompt},
-                    ],
-                    max_tokens=4096,
-                    temperature = 0.1,
-                )
+            response = client.chat.completions.create(
+                model=model,  
+                messages=[
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=4096,
+                temperature = 0.1,
+            )
             result = response.choices[0].message.content
             return result
         except Exception as e:
-            if hasattr(e, "message") and "filtered" in e.message:
+            if "filtered" in e.message:
                 print("Request filtered!")
                 return None
             print(f"Attempt {retries + 1} failed with error: {e}")
@@ -45,8 +33,11 @@ def get_gpt_result_with_retry(prompt, model = "", max_retries=1, use_json = True
 
     return None
 
+# RDS task
+data_dir = "../benchmark_data/RDS.json"
+# RDC task
+data_dir = "../benchmark_data/RDC.json"
 
-data_dir = ""
 with open(data_dir, 'r') as f:
     data = [json.loads(l) for l in f.readlines()]
 
@@ -60,10 +51,6 @@ if os.path.exists(output_file):
         if d['_id'] not in generated:
             new_data.append(d)
     data = new_data
-split_num = int(sys.argv[1])
-index = int(sys.argv[2])
-split = (len(data) // split_num) + 1
-data = data[(index * split) : min(((index+1) * split), len(data))]
 
 answer_prompt = """
 As an expert in rare disease field, enumerate top 5 most likely diagnosis for the following patient in order, with the most likely disease output first. Only consider rare diseases.
