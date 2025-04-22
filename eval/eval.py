@@ -71,7 +71,7 @@ Output Format: Output the scores in the following format.
 with open(output_file, "a") as f:
     for dat in tqdm(data):
         try:
-            response = get_gpt_result_with_retry(eval_prompt.format(answer = dat['answer'], diagnosis = dat['diagnosis']), use_json = False)
+            response = get_gpt_result_with_retry(eval_prompt.format(answer = dat['answer'], diagnosis = dat['diagnosis']))
         except Exception as e:
             print(e)
             continue
