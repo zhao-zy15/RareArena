@@ -73,7 +73,7 @@ with open(output_file, "a") as f:
             case = dat['case_report']
             # RDC task
             # case = dat['case_report'] + ' ' + dat['test_results']
-            response = get_gpt_result_with_retry(answer_prompt.format(case = case), use_json = False)
+            response = get_gpt_result_with_retry(answer_prompt.format(case = case))
         except Exception as e:
             print(e)
             continue
