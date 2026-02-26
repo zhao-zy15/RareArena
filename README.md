@@ -229,4 +229,13 @@ We would like to acknowledge that the RareArena dataset was created and provided
   
 
 ## Citation
-Our paper is currently under review at Lancet Digital Health.
+@article{CHEN2026100953,
+  title = {RareArena: a comprehensive benchmark dataset unveiling the potential of large language models in rare disease diagnosis},
+  journal = {The Lancet Digital Health},
+  pages = {100953},
+  year = {2026},
+  issn = {2589-7500},
+  doi = {https://doi.org/10.1016/j.landig.2025.100953},
+  url = {https://www.sciencedirect.com/science/article/pii/S2589750025001359},
+  author = {Haichao Chen and Zhengyun Zhao and Songchi Zhou and Shikai Hu and Jinyuan Wang and Ye Jin and Xianghong Jin and Yih Chung Tham and Xiaofei Wang and Weizhi Ma and Honghan Wu and Bin Sheng and Shuyang Zhang and Sheng Yu and Tien Yin Wong}
+}
