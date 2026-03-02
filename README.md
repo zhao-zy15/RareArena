@@ -1,6 +1,9 @@
 # RareArena
 A Comprehensive Rare Disease Diagnostic Dataset with nearly 50,000 patients covering more than 4000 diseases.
 
+## News
+- [2026/03] To enable cost-effective benchmarking, we have carefully selected a representative subset of cases that ensures coverage of all recorded rare diseases. Specifically, we randomly sampled up to three cases for each Orphanet Disorder type and for each disorder subtype. The resulting benchmark datasets are available at [RDS_benchmark](benchmark_data/RDS_benchmark.jsonl)  and [RDC_benchmark](benchmark_data/RDC_benchmark.jsonl)
+
 ## Data Collection
 We build our work upon [PMC-Patients](https://github.com/zhao-zy15/PMC-Patients), a large-scale patient summary dataset sourced from PMC case reports, and we use GPT-4o for all data processing.
 
