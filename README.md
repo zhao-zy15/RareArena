@@ -2,6 +2,7 @@
 A Comprehensive Rare Disease Diagnostic Dataset with nearly 50,000 patients covering more than 4000 diseases.
 
 ## News
+- [2026/03] We found that the previous evaluation method tended to assign an overestimated score 1 to hypernyms. To address this issue, we constructed a rare disease hypernym hierarchy based on Orphanet, which enables a stricter criterion for assigning a score of 1. The updated evaluation logic has been implemented in the [revised file](eval/eval_updated.py).
 - [2026/03] To enable cost-effective benchmarking, we have carefully selected a representative subset of cases that ensures coverage of all recorded rare diseases. Specifically, we randomly sampled up to three cases for each Orphanet Disorder type and for each disorder subtype. The resulting benchmark datasets are available at [RDS_benchmark](benchmark_data/RDS_benchmark.jsonl)  and [RDC_benchmark](benchmark_data/RDC_benchmark.jsonl).
 - [2026/02] Our paper has been published in *The Lancet Digital Health*. The full paper can be accessed via this [link](https://www.thelancet.com/journals/landig/article/PIIS2589-7500(25)00135-9).
 
